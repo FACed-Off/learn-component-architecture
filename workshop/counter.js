@@ -1,17 +1,15 @@
 import h from "./create-element";
 
 function Counter() {
-  const view = document.createElement("span");
-  view.append("0");
-
-  const button = document.createElement("button");
-  button.append("+");
-  button.onclick = () => {
+  const view = h("span", {}, "0");
+  // const view = document.createElement("span");
+  // view.append("0");
+  const button = h("button", { onclick: inc }, "+");
+  const inc = () => {
     view.textContent = parseInt(view.textContent) + 1;
   };
 
-  const counter = document.createElement("div");
-  counter.append(view, button);
+  const counter = h("div", {}, view, button);
   return counter;
 }
 
