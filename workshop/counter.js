@@ -1,18 +1,24 @@
-import h from "./create-element";
+import h from "./create-element.js";
 
-function Counter() {
-  const view = h("span", {}, "0");
-  // const view = document.createElement("span");
-  // view.append("0");
-  const button = h("button", { onclick: inc }, "+");
-  const inc = () => {
-    view.textContent = parseInt(view.textContent) + 1;
-  };
+let count = 0;
 
-  const counter = h("div", {}, view, button);
-  return counter;
+function setCount(newCount) {
+  count = newCount; // update state variable
+  app.innerHTML = ""; // get rid of old elements on page
+  app.append(Counter()); // re-run Counter to get new elements
 }
 
-// put the elements onto the page
+function Counter() {
+  const view = h("span", {}, count);
+  const dec = () => setCount(count - 1);
+  const decButton = h("button", { onclick: dec, disabled: count < 1 }, "-");
+  const inc = () => setCount(count + 1);
+  const incButton = h("button", { onclick: inc, disabled: count === 9 }, "+");
+  return h("div", {}, decButton, view, incButton);
+}
+
 const app = document.querySelector("#app");
+
+// render for the initial view
+// all subsequent re-renders happen in setCount
 app.append(Counter());
